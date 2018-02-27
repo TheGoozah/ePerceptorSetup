@@ -29,22 +29,22 @@ extern "C" NATIVEDLL_API void __cdecl DeleteSingleton()
 }
 
 //DATA STREAMING FUNCTIONS
-extern "C" NATIVEDLL_API void* __cdecl GetAllData(int* size)
+extern "C" NATIVEDLL_API void* __cdecl GetAllData(int* pSize)
 {
 	if (ETHOST == nullptr)
 		return nullptr;
 
-	void* ptr = ETHOST->GetAllData(size);
+	void* ptr = ETHOST->GetAllData(pSize);
 	//printf("Address Method2 return via Native Dynamic DLL: %#x \n", ptr);
 	return ptr;
 }
 
-extern "C" NATIVEDLL_API void* __cdecl GetDataStream(int* size)
+extern "C" NATIVEDLL_API void* __cdecl GetDataStream(int* pSize)
 {
 	if (ETHOST == nullptr)
 		return nullptr;
 
-	void* ptr = ETHOST->GetDataStream(size);
+	void* ptr = ETHOST->GetDataStream(pSize);
 	return ptr;
 }
 
@@ -59,12 +59,12 @@ extern "C" NATIVEDLL_API void __cdecl InvokeCalibration()
 	ETHOST->InvokeCalibration();
 }
 
-extern "C" NATIVEDLL_API bool __cdecl GetCalibrationPointData(double* X, double* Y, double* Scale)
+extern "C" NATIVEDLL_API bool __cdecl GetCalibrationPointData(double* pX, double* pY, double* pScale)
 {
 	if (ETHOST == nullptr)
 		return false;
 
-	return ETHOST->GetCalibrationPointData(X, Y, Scale);
+	return ETHOST->GetCalibrationPointData(pX, pY, pScale);
 }
 
 extern "C" NATIVEDLL_API bool __cdecl IsCalibrated()

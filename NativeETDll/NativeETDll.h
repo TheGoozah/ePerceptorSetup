@@ -17,11 +17,11 @@ extern "C" NATIVEDLL_API void __cdecl UpdateETHost();
 extern "C" NATIVEDLL_API void __cdecl DeleteSingleton();
 
 //DATA STREAMING FUNCTIONS
-extern "C" NATIVEDLL_API void* __cdecl GetAllData(int* size);
-extern "C" NATIVEDLL_API void* __cdecl GetDataStream(int* size);
+extern "C" NATIVEDLL_API void* __cdecl GetAllData(int* pSize);
+extern "C" NATIVEDLL_API void* __cdecl GetDataStream(int* pSize);
 extern "C" NATIVEDLL_API void __cdecl Flush();
 
 //CALIBRATION
 extern "C" NATIVEDLL_API void __cdecl InvokeCalibration();
-extern "C" NATIVEDLL_API bool __cdecl GetCalibrationPointData(double* X, double* Y, double* Scale);
+extern "C" NATIVEDLL_API bool __cdecl GetCalibrationPointData(double* pX, double* pY, double* pScale);
 extern "C" NATIVEDLL_API bool __cdecl IsCalibrated();
