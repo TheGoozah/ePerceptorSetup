@@ -36,13 +36,13 @@ public:
 	double GetDeltaTime(){ if (g_pETTimer != nullptr) return g_pETTimer->GetDeltaTime(); else return 0.0; };
 
 	//Data Streaming Functions
-	void* GetAllData(int* size);
-	void* GetDataStream(int* size);
+	void* GetAllData(int* pSize);
+	void* GetDataStream(int* pSize);
 	void Flush();
 
 	//Calibration Functions
 	void InvokeCalibration();
-	bool GetCalibrationPointData(double* X, double* Y, double* Scale);
+	bool GetCalibrationPointData(double* pX, double* pY, double* pScale);
 	bool IsCalibrated();
 
 private:

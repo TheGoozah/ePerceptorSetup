@@ -13,12 +13,12 @@ ETTimer* ETHost::g_pETTimer = nullptr;
 
 //Constructor
 ETHost::ETHost():
-m_pEyeTracker(nullptr),
-m_pDebugger(nullptr),
-m_pDataProvider(nullptr),
-m_pCalibrator(nullptr),
-m_bIsTracking(false),
-m_fpActiveDataReceiver(nullptr)
+	m_pEyeTracker(nullptr),
+	m_pDebugger(nullptr),
+	m_pDataProvider(nullptr),
+	m_pCalibrator(nullptr),
+	m_bIsTracking(false),
+	m_fpActiveDataReceiver(nullptr)
 {}
 
 //Destructor
@@ -92,17 +92,17 @@ void ETHost::UpdateETHost()
 }
 
 //Data Streaming Functions
-void* ETHost::GetAllData(int* size)
+void* ETHost::GetAllData(int* pSize)
 {
 	if (m_pDataProvider != nullptr)
-		return m_pDataProvider->GetAllData(size);
+		return m_pDataProvider->GetAllData(pSize);
 	return nullptr;
 }
 
-void* ETHost::GetDataStream(int* size)
+void* ETHost::GetDataStream(int* pSize)
 {
 	if (m_pDataProvider != nullptr)
-		return m_pDataProvider->GetDataStream(size);
+		return m_pDataProvider->GetDataStream(pSize);
 	return nullptr;
 }
 
@@ -119,20 +119,20 @@ void ETHost::InvokeCalibration()
 		m_pCalibrator->StartCalibration();
 }
 
-bool ETHost::GetCalibrationPointData(double* X, double* Y, double* Scale)
+bool ETHost::GetCalibrationPointData(double* pX, double* pY, double* pScale)
 {
 	if (this->m_pCalibrator != nullptr && this->m_pCalibrator->ReturnActiveCalibrationPoint() != nullptr)
 	{
-		*X = this->m_pCalibrator->ReturnActiveCalibrationPoint()->GetPoint2D().X;
-		*Y = this->m_pCalibrator->ReturnActiveCalibrationPoint()->GetPoint2D().Y;
-		*Scale = this->m_pCalibrator->ReturnActiveCalibrationPoint()->GetScale();
+		*pX = this->m_pCalibrator->ReturnActiveCalibrationPoint()->GetPoint2D().X;
+		*pY = this->m_pCalibrator->ReturnActiveCalibrationPoint()->GetPoint2D().Y;
+		*pScale = this->m_pCalibrator->ReturnActiveCalibrationPoint()->GetScale();
 		return true;
 	}
 	else
 	{
-		*X = 0;
-		*Y = 0;
-		*Scale = 0;
+		*pX = 0;
+		*pY = 0;
+		*pScale = 0;
 		return false;
 	}
 }

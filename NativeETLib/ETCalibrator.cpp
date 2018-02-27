@@ -12,37 +12,37 @@ tobiigaze_eye_tracker* ETCalibrator::g_pAttachedTrackingDevice;
 CalibrationState ETCalibrator::g_eCurrentState;
 
 //Constructor
-ETCalibrator::ETCalibrator(tobiigaze_eye_tracker* trackingDevice):
-m_iCurrentTargetPointIndex(0),
-m_pCurrentCalibrationPoint(nullptr),
-m_bPositioningRequired(false),
-m_bIsCalibrated(false),
-m_bCalibratingPoint(false),
-m_bComputingCalibration(false)
+ETCalibrator::ETCalibrator(tobiigaze_eye_tracker* ptrackingDevice):
+	m_iCurrentTargetPointIndex(0),
+	m_pCurrentCalibrationPoint(nullptr),
+	m_bPositioningRequired(false),
+	m_bIsCalibrated(false),
+	m_bCalibratingPoint(false),
+	m_bComputingCalibration(false)
 {
 	//Store attached tracking device
-	ETCalibrator::g_pAttachedTrackingDevice = trackingDevice;
+	ETCalibrator::g_pAttachedTrackingDevice = ptrackingDevice;
 	ETCalibrator::g_eCurrentState = CalibrationState::INACTIVE;
 
 	//Fill our point array, TODO: add points from external file 
-	m_vCalibrationPoints.push_back(new ETCalibrationPoint(0.5,0.5));
-	m_vCalibrationPoints.push_back(new ETCalibrationPoint(0.9, 0.5));
-	m_vCalibrationPoints.push_back(new ETCalibrationPoint(0.9, 0.1));
-	m_vCalibrationPoints.push_back(new ETCalibrationPoint(0.5, 0.1));
-	m_vCalibrationPoints.push_back(new ETCalibrationPoint(0.1, 0.1));
-	m_vCalibrationPoints.push_back(new ETCalibrationPoint(0.1, 0.5));
-	m_vCalibrationPoints.push_back(new ETCalibrationPoint(0.1, 0.9));
-	m_vCalibrationPoints.push_back(new ETCalibrationPoint(0.5, 0.9));
-	m_vCalibrationPoints.push_back(new ETCalibrationPoint(0.9, 0.9));
+	m_vpCalibrationPoints.push_back(new ETCalibrationPoint(0.5,0.5));
+	m_vpCalibrationPoints.push_back(new ETCalibrationPoint(0.9, 0.5));
+	m_vpCalibrationPoints.push_back(new ETCalibrationPoint(0.9, 0.1));
+	m_vpCalibrationPoints.push_back(new ETCalibrationPoint(0.5, 0.1));
+	m_vpCalibrationPoints.push_back(new ETCalibrationPoint(0.1, 0.1));
+	m_vpCalibrationPoints.push_back(new ETCalibrationPoint(0.1, 0.5));
+	m_vpCalibrationPoints.push_back(new ETCalibrationPoint(0.1, 0.9));
+	m_vpCalibrationPoints.push_back(new ETCalibrationPoint(0.5, 0.9));
+	m_vpCalibrationPoints.push_back(new ETCalibrationPoint(0.9, 0.9));
 }
 
 //Destructor
 ETCalibrator::~ETCalibrator()
 {
 	//Delete all calibration points in vector
-	for each (auto cp in m_vCalibrationPoints)
+	for each (auto cp in m_vpCalibrationPoints)
 		SAFEDELETE(cp);
-	m_vCalibrationPoints.clear();
+	m_vpCalibrationPoints.clear();
 
 	SAFEDELETE(m_pCurrentCalibrationPoint);
 }
@@ -63,13 +63,13 @@ void ETCalibrator::Update()
 		bool finished;
 	case CalibrationState::INTIALIZE:
 		//Check if data
-		if (m_vCalibrationPoints.size() <= 0)
+		if (m_vpCalibrationPoints.size() <= 0)
 		{
 			ETCalibrator::g_eCurrentState = CalibrationState::FINISHED;
 			break;
 		}
 		//Create our dumy calibration point and copy data from the first calibration point in our list
-		m_pCurrentCalibrationPoint = new ETCalibrationPoint(*m_vCalibrationPoints.at(m_iCurrentTargetPointIndex));
+		m_pCurrentCalibrationPoint = new ETCalibrationPoint(*m_vpCalibrationPoints.at(m_iCurrentTargetPointIndex));
 		//Set variables
 		m_bIsCalibrated = false;
 		//Start positioning, if not required, start focusing for this first point
@@ -88,7 +88,7 @@ void ETCalibrator::Update()
 		//Reset variables
 		m_bCalibratingPoint = false;
 		//Get the next point in the list (if any)
-		if (m_iCurrentTargetPointIndex + 1 >= m_vCalibrationPoints.size())
+		if (m_iCurrentTargetPointIndex + 1 >= m_vpCalibrationPoints.size())
 		{
 			ETCalibrator::g_eCurrentState = CalibrationState::COMPUTE_CALIBRATION;
 			break;
@@ -99,7 +99,7 @@ void ETCalibrator::Update()
 		break;
 	case CalibrationState::MOVE_POINT:
 		//Move to target
-		finished = m_pCurrentCalibrationPoint->Move(ETHOST->GetDeltaTime(), m_vCalibrationPoints.at(m_iCurrentTargetPointIndex)->GetPoint2D());
+		finished = m_pCurrentCalibrationPoint->Move(ETHOST->GetDeltaTime(), m_vpCalibrationPoints.at(m_iCurrentTargetPointIndex)->GetPoint2D());
 		if (finished)
 			ETCalibrator::g_eCurrentState = CalibrationState::FOCUS_POINT;
 		break;
@@ -146,13 +146,13 @@ void ETCalibrator::Update()
 }
 
 //Private Functions
-void ETCalibrator::StartCompleted(tobiigaze_error_code error_code, void *user_data)
+void ETCalibrator::StartCompleted(tobiigaze_error_code error_code, void *pUserData)
 {
 	printf("Started calibration pocess \n");
 	ETCalibrator::g_eCurrentState = CalibrationState::FOCUS_POINT;
 }
 
-void ETCalibrator::StopCompleted(tobiigaze_error_code error_code, void *user_data)
+void ETCalibrator::StopCompleted(tobiigaze_error_code error_code, void *pUserData)
 {
 	if (error_code != TOBIIGAZE_ERROR_SUCCESS)
 	{
@@ -165,9 +165,9 @@ void ETCalibrator::StopCompleted(tobiigaze_error_code error_code, void *user_dat
 	ETCalibrator::g_eCurrentState = CalibrationState::FINISHED;
 }
 
-void ETCalibrator::CalibrationPoint(tobiigaze_error_code error_code, ETCalibrationPoint* point)
+void ETCalibrator::CalibrationPoint(tobiigaze_error_code error_code, ETCalibrationPoint* pPoint)
 {
-	if (error_code != TOBIIGAZE_ERROR_SUCCESS || point == nullptr)
+	if (error_code != TOBIIGAZE_ERROR_SUCCESS || pPoint == nullptr)
 	{
 		ETHOST->GetDebugger()->ReportError(error_code, "Error Add Calibration Point \n");
 		tobiigaze_calibration_stop_async(ETCalibrator::g_pAttachedTrackingDevice, StopCalibration, nullptr);
@@ -176,14 +176,14 @@ void ETCalibrator::CalibrationPoint(tobiigaze_error_code error_code, ETCalibrati
 
 	//Calibrate
 	tobiigaze_point_2d p;
-	p.x = point->GetPoint2D().X;
-	p.y = point->GetPoint2D().Y;
+	p.x = pPoint->GetPoint2D().X;
+	p.y = pPoint->GetPoint2D().Y;
 	tobiigaze_calibration_add_point_async(g_pAttachedTrackingDevice, &p, CalibrationPointCompleted, nullptr);
 
 	printf("Calibrating point... \n");
 }
 
-void ETCalibrator::CalibrationPointCompleted(tobiigaze_error_code error_code, void *user_data)
+void ETCalibrator::CalibrationPointCompleted(tobiigaze_error_code error_code, void *pUserData)
 {
 	if (error_code != TOBIIGAZE_ERROR_SUCCESS)
 	{
@@ -197,7 +197,7 @@ void ETCalibrator::CalibrationPointCompleted(tobiigaze_error_code error_code, vo
 	ETCalibrator::g_eCurrentState = CalibrationState::UNFOCUS_POINT;
 }
 
-void ETCalibrator::ComputeCalibration(tobiigaze_error_code error_code, void *user_data)
+void ETCalibrator::ComputeCalibration(tobiigaze_error_code error_code, void *pUserData)
 {
 	if (error_code != TOBIIGAZE_ERROR_SUCCESS)
 	{
@@ -211,7 +211,7 @@ void ETCalibrator::ComputeCalibration(tobiigaze_error_code error_code, void *use
 	printf("Computing calibration... \n");
 }
 
-void ETCalibrator::ComputeCalibrationCompleted(tobiigaze_error_code error_code, void *user_data)
+void ETCalibrator::ComputeCalibrationCompleted(tobiigaze_error_code error_code, void *pUserData)
 {
 	if (error_code != TOBIIGAZE_ERROR_SUCCESS)
 	{
@@ -226,12 +226,12 @@ void ETCalibrator::ComputeCalibrationCompleted(tobiigaze_error_code error_code, 
 	tobiigaze_calibration_stop_async(ETCalibrator::g_pAttachedTrackingDevice, StopCalibration, nullptr);
 }
 
-void ETCalibrator::StopCalibration(tobiigaze_error_code error_code, void *user_data)
+void ETCalibrator::StopCalibration(tobiigaze_error_code error_code, void *pUserData)
 {
 	//Switch state
 	printf("Stopped calibration \n");
 	ETCalibrator::g_eCurrentState = CalibrationState::FINISHED;
 }
 
-void ETCalibrator::Dummy(tobiigaze_error_code error_code, void *user_data)
+void ETCalibrator::Dummy(tobiigaze_error_code error_code, void *pUserData)
 {}

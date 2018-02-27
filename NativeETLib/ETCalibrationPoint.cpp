@@ -14,21 +14,21 @@ Implementation of the ETCalibrationPoint functionality
 #define M_PI 3.14159265358979323846
 
 //Constructor
-ETCalibrationPoint::ETCalibrationPoint(const double X, const double Y, const double Scale, const double MinScale, const double MaxScale) :
-m_dScale(Scale),
-m_dStartScale(Scale),
-m_dMinScale(MinScale),
-m_dMaxScale(MaxScale),
-m_dInternalTimer(0.0),
-m_dMoveDistance(0.0),
-m_bInFocus(false)
+ETCalibrationPoint::ETCalibrationPoint(const double x, const double y, const double scale, const double minScale, const double maxScale) :
+	m_dScale(scale),
+	m_dStartScale(scale),
+	m_dMinScale(minScale),
+	m_dMaxScale(maxScale),
+	m_dInternalTimer(0.0),
+	m_dMoveDistance(0.0),
+	m_bInFocus(false)
 {
-	m_pointData.X = X;
-	m_pointData.Y = Y;
+	m_pointData.X = x;
+	m_pointData.Y = y;
 
 	m_dStartScale = m_dScale;
-	m_startPosition.X = X;
-	m_startPosition.Y = Y;
+	m_startPosition.X = x;
+	m_startPosition.Y = y;
 }
 
 //Destructor
@@ -37,9 +37,9 @@ ETCalibrationPoint::~ETCalibrationPoint()
 
 //Copy Constructor
 ETCalibrationPoint::ETCalibrationPoint(const ETCalibrationPoint& source):
-m_dInternalTimer(0.0),
-m_dMoveDistance(0.0),
-m_bInFocus(false)
+	m_dInternalTimer(0.0),
+	m_dMoveDistance(0.0),
+	m_bInFocus(false)
 {
 	this->m_pointData.X = source.m_pointData.X;
 	this->m_pointData.Y = source.m_pointData.Y;
@@ -98,7 +98,7 @@ bool ETCalibrationPoint::Grow(const double deltaTime, const double timeSpan)
 	}
 }
 
-bool ETCalibrationPoint::Move(const double deltaTime, ET_Point_2D target)
+bool ETCalibrationPoint::Move(const double deltaTime, const ET_Point_2D& target)
 {
 	//Lerp
 	m_dInternalTimer += deltaTime;

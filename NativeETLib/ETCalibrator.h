@@ -31,8 +31,8 @@ class ETCalibrator final
 {
 public:
 	//Constructor & Destructor
-	ETCalibrator(tobiigaze_eye_tracker* trackingDevice);
-	virtual ~ETCalibrator();
+	ETCalibrator(tobiigaze_eye_tracker* pTrackingDevice);
+	~ETCalibrator();
 
 	//Functions
 	void StartCalibration();
@@ -44,7 +44,7 @@ public:
 
 private:
 	//Datamembers
-	std::vector<ETCalibrationPoint*> m_vCalibrationPoints;
+	std::vector<ETCalibrationPoint*> m_vpCalibrationPoints;
 	ETCalibrationPoint* m_pCurrentCalibrationPoint;
 	int m_iCurrentTargetPointIndex = 0;
 	bool m_bPositioningRequired;
@@ -57,12 +57,12 @@ private:
 	static CalibrationState g_eCurrentState;
 
 	//Callback Functions
-	static void TOBIIGAZE_CALL StartCompleted(tobiigaze_error_code error_code, void *user_data);
-	static void TOBIIGAZE_CALL StopCompleted(tobiigaze_error_code error_code, void *user_data);
-	static void TOBIIGAZE_CALL CalibrationPoint(tobiigaze_error_code error_code, ETCalibrationPoint* point);
-	static void TOBIIGAZE_CALL CalibrationPointCompleted(tobiigaze_error_code error_code, void *user_data);
-	static void TOBIIGAZE_CALL ComputeCalibration(tobiigaze_error_code error_code, void *user_data);
-	static void TOBIIGAZE_CALL ComputeCalibrationCompleted(tobiigaze_error_code error_code, void *user_data);
-	static void TOBIIGAZE_CALL StopCalibration(tobiigaze_error_code error_code, void *user_data);
-	static void TOBIIGAZE_CALL Dummy(tobiigaze_error_code error_code, void *user_data);
+	static void TOBIIGAZE_CALL StartCompleted(tobiigaze_error_code error_code, void *pUserData);
+	static void TOBIIGAZE_CALL StopCompleted(tobiigaze_error_code error_code, void *pUserData);
+	static void TOBIIGAZE_CALL CalibrationPoint(tobiigaze_error_code error_code, ETCalibrationPoint* pPoint);
+	static void TOBIIGAZE_CALL CalibrationPointCompleted(tobiigaze_error_code error_code, void *pUserData);
+	static void TOBIIGAZE_CALL ComputeCalibration(tobiigaze_error_code error_code, void *pUserData);
+	static void TOBIIGAZE_CALL ComputeCalibrationCompleted(tobiigaze_error_code error_code, void *pUserData);
+	static void TOBIIGAZE_CALL StopCalibration(tobiigaze_error_code error_code, void *pUserData);
+	static void TOBIIGAZE_CALL Dummy(tobiigaze_error_code error_code, void *pUserData);
 };

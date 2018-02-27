@@ -21,8 +21,8 @@ public:
 	//Functions
 	void ConnectToHost(DataReceiver& dr); //Connects the provider to the host, that connects it to the device
 	void DisconnectFromHost(DataReceiver& dr); //Disconnect the provider from the host, that disconnects it from the device
-	void* GetAllData(int* size); //Return the recorded data (using pointer to avoided copies)
-	void* GetDataStream(int* size); //Returns the stream of recorded data since last call
+	void* GetAllData(int* pSize); //Return the recorded data (using pointer to avoided copies)
+	void* GetDataStream(int* pSize); //Returns the stream of recorded data since last call
 	void Flush();
 
 private:
@@ -32,5 +32,5 @@ private:
 	static bool m_bTransmittedStream; //Holds if our temporary stream was transfered or not
 
 	//Callback Functions
-	static void TOBIIGAZE_CALL OnGazeData(const struct tobiigaze_gaze_data* gazedata, const struct tobiigaze_gaze_data_extensions* extensions, void *user_data); //Function that is linked with the device
+	static void TOBIIGAZE_CALL OnGazeData(const struct tobiigaze_gaze_data* pGazedata, const struct tobiigaze_gaze_data_extensions* pExtensions, void *pUserData); //Function that is linked with the device
 };

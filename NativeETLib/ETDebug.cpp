@@ -25,12 +25,12 @@ ETDebug::~ETDebug()
 }
 
 //Public Functions
-void ETDebug::ReportError(tobiigaze_error_code error_code, const char* error_message)
+void ETDebug::ReportError(tobiigaze_error_code error_code, const char* pError_message)
 {
 	if (error_code)
 	{
-		fprintf(stderr, "Error: %d(%s). \n", error_code, error_message);
-		fprintf(stderr, "Error means: %d(%s). \n", error_code, error_message);
+		fprintf(stderr, "Error: %d(%s). \n", error_code, pError_message);
+		fprintf(stderr, "Error means: %d(%s). \n", error_code, pError_message);
 		fprintf(stderr, "Error: %s\n", tobiigaze_get_error_message(error_code));
 	}
 }
@@ -44,15 +44,15 @@ void ETDebug::CreateConsoleWindow()
 
 	HANDLE handle_out = GetStdHandle(STD_OUTPUT_HANDLE);
 	int hCrt = _open_osfhandle((long)handle_out, _O_TEXT);
-	FILE* hf_out = _fdopen(hCrt, "w");
-	setvbuf(hf_out, NULL, _IONBF, 1);
-	*stdout = *hf_out;
+	FILE* pHfOut = _fdopen(hCrt, "w");
+	setvbuf(pHfOut, NULL, _IONBF, 1);
+	*stdout = *pHfOut;
 
 	HANDLE handle_in = GetStdHandle(STD_INPUT_HANDLE);
 	hCrt = _open_osfhandle((long)handle_in, _O_TEXT);
-	FILE* hf_in = _fdopen(hCrt, "r");
-	setvbuf(hf_in, NULL, _IONBF, 128);
-	*stdin = *hf_in;
+	FILE* pHfIn = _fdopen(hCrt, "r");
+	setvbuf(pHfIn, NULL, _IONBF, 128);
+	*stdin = *pHfIn;
 #endif
 }
 

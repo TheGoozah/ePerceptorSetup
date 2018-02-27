@@ -10,8 +10,8 @@ class ETCalibrationPoint final
 {
 public:
 	//Constructor & Destructor
-	ETCalibrationPoint(const double X, const double Y, const double Scale = 1.0, const double MinScale = 0.1, const double MaxScale = 1.0);
-	virtual ~ETCalibrationPoint();
+	ETCalibrationPoint(const double x, const double y, const double scale = 1.0, const double minScale = 0.1, const double maxScale = 1.0);
+	~ETCalibrationPoint();
 
 	//Copy Constructor
 	ETCalibrationPoint(const ETCalibrationPoint& source);
@@ -19,7 +19,7 @@ public:
 	//Functions
 	bool Shrink(const double deltaTime, const double timeSpan);
 	bool Grow(const double deltaTime, const double timeSpan);
-	bool Move(const double deltaTime, ET_Point_2D target);
+	bool Move(const double deltaTime, const ET_Point_2D& target);
 	void Update();
 
 	//Getters & Setters

@@ -39,36 +39,36 @@ void ETDataProvider::DisconnectFromHost(DataReceiver& dr)
 }
 
 //Private Functions
-void ETDataProvider::OnGazeData(const struct tobiigaze_gaze_data* gazedata, const struct tobiigaze_gaze_data_extensions* extensions, void *user_data)
+void ETDataProvider::OnGazeData(const struct tobiigaze_gaze_data* pGazedata, const struct tobiigaze_gaze_data_extensions* pExtensions, void *pUserData)
 {
 	//Check if one or both eyes is being tracked, and if so store the data
-	if (gazedata->tracking_status == TOBIIGAZE_TRACKING_STATUS_BOTH_EYES_TRACKED ||
-		gazedata->tracking_status == TOBIIGAZE_TRACKING_STATUS_ONLY_LEFT_EYE_TRACKED ||
-		gazedata->tracking_status == TOBIIGAZE_TRACKING_STATUS_ONLY_RIGHT_EYE_TRACKED ||
-		gazedata->tracking_status == TOBIIGAZE_TRACKING_STATUS_ONE_EYE_TRACKED_PROBABLY_LEFT ||
-		gazedata->tracking_status == TOBIIGAZE_TRACKING_STATUS_ONE_EYE_TRACKED_PROBABLY_RIGHT)
+	if (pGazedata->tracking_status == TOBIIGAZE_TRACKING_STATUS_BOTH_EYES_TRACKED ||
+		pGazedata->tracking_status == TOBIIGAZE_TRACKING_STATUS_ONLY_LEFT_EYE_TRACKED ||
+		pGazedata->tracking_status == TOBIIGAZE_TRACKING_STATUS_ONLY_RIGHT_EYE_TRACKED ||
+		pGazedata->tracking_status == TOBIIGAZE_TRACKING_STATUS_ONE_EYE_TRACKED_PROBABLY_LEFT ||
+		pGazedata->tracking_status == TOBIIGAZE_TRACKING_STATUS_ONE_EYE_TRACKED_PROBABLY_RIGHT)
 	{
 		//Store the data
 		ET_GazeData gd;
-		gd.timestamp = (long long)gazedata->timestamp;
-		gd.tracking_status = (ET_Tracking_Status)gazedata->tracking_status;
+		gd.timestamp = (long long)pGazedata->timestamp;
+		gd.tracking_status = (ET_Tracking_Status)pGazedata->tracking_status;
 
 		//Left
 		ET_Point_3D p1;
-		p1.X = gazedata->left.eye_position_from_eye_tracker_mm.x;
-		p1.Y = gazedata->left.eye_position_from_eye_tracker_mm.y;
-		p1.Z = gazedata->left.eye_position_from_eye_tracker_mm.z;
+		p1.X = pGazedata->left.eye_position_from_eye_tracker_mm.x;
+		p1.Y = pGazedata->left.eye_position_from_eye_tracker_mm.y;
+		p1.Z = pGazedata->left.eye_position_from_eye_tracker_mm.z;
 		ET_Point_3D p2;
-		p2.X = gazedata->left.eye_position_in_track_box_normalized.x;
-		p2.Y = gazedata->left.eye_position_in_track_box_normalized.y;
-		p2.Z = gazedata->left.eye_position_in_track_box_normalized.z;
+		p2.X = pGazedata->left.eye_position_in_track_box_normalized.x;
+		p2.Y = pGazedata->left.eye_position_in_track_box_normalized.y;
+		p2.Z = pGazedata->left.eye_position_in_track_box_normalized.z;
 		ET_Point_3D p3;
-		p3.X = gazedata->left.gaze_point_from_eye_tracker_mm.x;
-		p3.Y = gazedata->left.gaze_point_from_eye_tracker_mm.y;
-		p3.Z = gazedata->left.gaze_point_from_eye_tracker_mm.z;
+		p3.X = pGazedata->left.gaze_point_from_eye_tracker_mm.x;
+		p3.Y = pGazedata->left.gaze_point_from_eye_tracker_mm.y;
+		p3.Z = pGazedata->left.gaze_point_from_eye_tracker_mm.z;
 		ET_Point_2D p4;
-		p4.X = gazedata->left.gaze_point_on_display_normalized.x;
-		p4.Y = gazedata->left.gaze_point_on_display_normalized.y;
+		p4.X = pGazedata->left.gaze_point_on_display_normalized.x;
+		p4.Y = pGazedata->left.gaze_point_on_display_normalized.y;
 		ET_GazeDataEye left;
 		left.eye_position_from_eye_tracker_mm = p1;
 		left.eye_position_in_track_box_normalized = p2;
@@ -78,20 +78,20 @@ void ETDataProvider::OnGazeData(const struct tobiigaze_gaze_data* gazedata, cons
 
 		//Right
 		ET_Point_3D p5;
-		p5.X = gazedata->right.eye_position_from_eye_tracker_mm.x;
-		p5.Y = gazedata->right.eye_position_from_eye_tracker_mm.y;
-		p5.Z = gazedata->right.eye_position_from_eye_tracker_mm.z;
+		p5.X = pGazedata->right.eye_position_from_eye_tracker_mm.x;
+		p5.Y = pGazedata->right.eye_position_from_eye_tracker_mm.y;
+		p5.Z = pGazedata->right.eye_position_from_eye_tracker_mm.z;
 		ET_Point_3D p6;
-		p6.X = gazedata->right.eye_position_in_track_box_normalized.x;
-		p6.Y = gazedata->right.eye_position_in_track_box_normalized.y;
-		p6.Z = gazedata->right.eye_position_in_track_box_normalized.z;
+		p6.X = pGazedata->right.eye_position_in_track_box_normalized.x;
+		p6.Y = pGazedata->right.eye_position_in_track_box_normalized.y;
+		p6.Z = pGazedata->right.eye_position_in_track_box_normalized.z;
 		ET_Point_3D p7;
-		p7.X = gazedata->right.gaze_point_from_eye_tracker_mm.x;
-		p7.Y = gazedata->right.gaze_point_from_eye_tracker_mm.y;
-		p7.Z = gazedata->right.gaze_point_from_eye_tracker_mm.z;
+		p7.X = pGazedata->right.gaze_point_from_eye_tracker_mm.x;
+		p7.Y = pGazedata->right.gaze_point_from_eye_tracker_mm.y;
+		p7.Z = pGazedata->right.gaze_point_from_eye_tracker_mm.z;
 		ET_Point_2D p8;
-		p8.X = gazedata->right.gaze_point_on_display_normalized.x;
-		p8.Y = gazedata->right.gaze_point_on_display_normalized.y;
+		p8.X = pGazedata->right.gaze_point_on_display_normalized.x;
+		p8.Y = pGazedata->right.gaze_point_on_display_normalized.y;
 		ET_GazeDataEye right;
 		right.eye_position_from_eye_tracker_mm = p5;
 		right.eye_position_in_track_box_normalized = p6;
@@ -115,26 +115,26 @@ void ETDataProvider::OnGazeData(const struct tobiigaze_gaze_data* gazedata, cons
 	}
 }
 
-void* ETDataProvider::GetAllData(int* size)
+void* ETDataProvider::GetAllData(int* pSize)
 {
 	//Pass the size
-	*size = m_vTotalBuffer.size();
+	*pSize = m_vTotalBuffer.size();
 
 	//Check if data
-	if (*size <= 0)
+	if (*pSize <= 0)
 		return nullptr;
 
 	//Fill the container with recorded data
 	return &m_vTotalBuffer[0];
 }
 
-void* ETDataProvider::GetDataStream(int* size)
+void* ETDataProvider::GetDataStream(int* pSize)
 {
 	//Pass the size
-	*size = m_vStream.size();
+	*pSize = m_vStream.size();
 
 	//Check if data
-	if (*size <= 0)
+	if (*pSize <= 0)
 		return nullptr;
 
 	//Flag transmittion
