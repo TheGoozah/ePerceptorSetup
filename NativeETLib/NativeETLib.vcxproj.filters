@@ -1,0 +1,78 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="Core">
+      <UniqueIdentifier>{6392dc49-874a-456b-b18d-046cbae629b9}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Debug">
+      <UniqueIdentifier>{5b267f45-2dcc-40e7-88a1-ef9d67941634}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Helpers">
+      <UniqueIdentifier>{2ac9bb77-4bec-49c2-9752-4ba7c288c344}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Data">
+      <UniqueIdentifier>{bdcf9165-52ee-4324-ab55-34181d4f2c4d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Data\DataProviders">
+      <UniqueIdentifier>{3e8cd409-238d-469d-ac0d-6373c2f85a73}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Calibration">
+      <UniqueIdentifier>{2cc3bcf7-ce2b-40c2-91c4-9798bb6955a5}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <Text Include="ReadMe.txt" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="ETHost.h">
+      <Filter>Core</Filter>
+    </ClInclude>
+    <ClInclude Include="ETDebug.h">
+      <Filter>Debug</Filter>
+    </ClInclude>
+    <ClInclude Include="stdafx.h">
+      <Filter>Helpers</Filter>
+    </ClInclude>
+    <ClInclude Include="targetver.h">
+      <Filter>Helpers</Filter>
+    </ClInclude>
+    <ClInclude Include="ETDataProvider.h">
+      <Filter>Data\DataProviders</Filter>
+    </ClInclude>
+    <ClInclude Include="ETTypes.h">
+      <Filter>Helpers</Filter>
+    </ClInclude>
+    <ClInclude Include="ETCalibrator.h">
+      <Filter>Calibration</Filter>
+    </ClInclude>
+    <ClInclude Include="ETCalibrationPoint.h">
+      <Filter>Calibration</Filter>
+    </ClInclude>
+    <ClInclude Include="ETTimer.h">
+      <Filter>Core</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="ETHost.cpp">
+      <Filter>Core</Filter>
+    </ClCompile>
+    <ClCompile Include="ETDebug.cpp">
+      <Filter>Debug</Filter>
+    </ClCompile>
+    <ClCompile Include="stdafx.cpp">
+      <Filter>Helpers</Filter>
+    </ClCompile>
+    <ClCompile Include="ETDataProvider.cpp">
+      <Filter>Data\DataProviders</Filter>
+    </ClCompile>
+    <ClCompile Include="ETCalibrator.cpp">
+      <Filter>Calibration</Filter>
+    </ClCompile>
+    <ClCompile Include="ETCalibrationPoint.cpp">
+      <Filter>Calibration</Filter>
+    </ClCompile>
+    <ClCompile Include="ETTimer.cpp">
+      <Filter>Core</Filter>
+    </ClCompile>
+  </ItemGroup>
+</Project>
